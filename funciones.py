@@ -5,6 +5,8 @@ import random
 """ pre: archivos de entrada: clientes.csv, productos.csv, ventas.csv
     post: imprimir en la consola el resumen inicial     
 """
+
+
 def resumenInicial():
     print(f"{bcolors.HEADER}Resumen inicial {bcolors.ENDC}")
 
@@ -134,8 +136,11 @@ def resumenInicial():
     )
     input("Enter para continuar en el menu: ")
 
+
 """" pre: archivos de entrada: productos.csv
     post: imprimir en la consola la simulacion de una compra"""
+
+
 def simular_compra():
     print(f"{bcolors.HEADER}Simular compra {bcolors.ENDC}")
     # Leer el archivo productos.csv
@@ -150,7 +155,7 @@ def simular_compra():
             print(
                 f"{bcolors.OKGREEN}{i+1}.{bcolors.ENDC} {fila[1]} - {fila[2]} - {fila[3]}"
             )
-        #Generar ciclo de compras
+        # Generar ciclo de compras
         confirmar: bool = True
         while confirmar:
             producto = int(
@@ -158,30 +163,37 @@ def simular_compra():
                     f"{bcolors.HEADER}{bcolors.UNDERLINE}Ingrese el número del producto que desea comprar:{bcolors.ENDC} "
                 )
             )
+            if producto > len(filas):
+                print(f"{bcolors.FAIL}Producto no encontrado{bcolors.ENDC}")
+                continue
             cantidad = int(
                 input(
                     f"{bcolors.HEADER}{bcolors.UNDERLINE}Ingrese la cantidad que desea comprar:{bcolors.ENDC} "
                 )
             )
-            #Añadir la seleccion del producto al carrito
+            # Añadir la seleccion del producto al carrito
             carrito.append([filas[producto - 1][1], filas[producto - 1][3], cantidad])
-            
+
             print(f"{bcolors.OKGREEN}Producto agregado al carrito{bcolors.ENDC}")
             print("¿Desea agregar otro producto?")
             print(f"{bcolors.OKGREEN}1.{bcolors.ENDC} Si")
             print(f"{bcolors.OKRED}2.{bcolors.ENDC} No")
             confirmar = int(input("Ingrese el número de la opción: ")) == 1
-            
+
         print(f"{bcolors.OKRED}Carrito de compras:{bcolors.ENDC} ")
-        
+
         precio_total = 0
         for i in carrito:
             print(
                 f"{bcolors.OKGREEN}Producto:{bcolors.ENDC} {i[0]}, {bcolors.OKGREEN}Precio por unidad:{bcolors.ENDC} {i[1]}, {bcolors.OKGREEN}Cantidad:{bcolors.ENDC} {i[2]}, {bcolors.OKGREEN}Precio total por producto:{bcolors.ENDC} {int(i[2])*int(i[1])}"
             )
             precio_total += int(i[2]) * int(i[1])
-        print(f"{bcolors.OKGREEN}Precio total de la compra:{bcolors.ENDC} {precio_total}")
-    print(f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}")
+        print(
+            f"{bcolors.OKGREEN}Precio total de la compra:{bcolors.ENDC} {precio_total}"
+        )
+    print(
+        f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
+    )
     input("Enter para continuar en el menu: ")
 
 
