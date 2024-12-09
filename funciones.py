@@ -2,6 +2,9 @@ import csv
 import random
 
 
+""" pre: archivos de entrada: clientes.csv, productos.csv, ventas.csv
+    post: imprimir en la consola el resumen inicial     
+"""
 def resumenInicial():
     print(f"{bcolors.HEADER}Resumen inicial {bcolors.ENDC}")
 
@@ -47,7 +50,12 @@ def resumenInicial():
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
     )
 
+    """ pre: archivos de entrada: clientes.csv, productos.csv, ventas.csv
+        post: archivo de salida: ventas_actualizadas.csv, imprimir en la consola la relación de ventas y clientes
+    """
+
     def relacion_venta_cliente():
+        print(f"{bcolors.HEADER}Relación de ventas y clientes {bcolors.ENDC}")
         with open("clientes.csv", "r") as archivo:
             lector = csv.reader(archivo)
             next(lector)
@@ -80,12 +88,12 @@ def resumenInicial():
                 fila[4] = random.randint(1, len(listCliente))
 
         # Escribir el archivo CSV actualizado, con la columna que contiene los id de los clientes
-        with open("ventas.csv", "w", newline="") as archivo:
+        with open("ventas_actualizadas.csv", "w", newline="") as archivo:
             escritor_csv = csv.writer(archivo)
             escritor_csv.writerows(filas)
 
-        # Leer el archivo ventas.csv para obtener los id de los productos que cada cliente ha comprado y añadirlo al diccionario
-        with open("ventas.csv", "r") as archivo:
+        # Leer el archivo ventas_actualizadas.csv para obtener los id de los productos que cada cliente ha comprado y añadirlo al diccionario
+        with open("ventas_actualizadas.csv", "r") as archivo:
             lector_csv = csv.reader(archivo)
             next(lector_csv)
             relacion = dict()
@@ -124,6 +132,56 @@ def resumenInicial():
     print(
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
     )
+    input("Enter para continuar en el menu: ")
+
+"""" pre: archivos de entrada: productos.csv
+    post: imprimir en la consola la simulacion de una compra"""
+def simular_compra():
+    print(f"{bcolors.HEADER}Simular compra {bcolors.ENDC}")
+    # Leer el archivo productos.csv
+    with open("productos.csv", "r") as archivo:
+        lector_csv = csv.reader(archivo)
+        next(lector_csv)
+        filas = list(lector_csv)
+        carrito = []
+        # presupuesto = int(input("Ingrese su presupuesto en números: "))
+        # Obtener la informacón de los productos e imprimir el menú de opciones
+        for i, fila in enumerate(filas):
+            print(
+                f"{bcolors.OKGREEN}{i+1}.{bcolors.ENDC} {fila[1]} - {fila[2]} - {fila[3]}"
+            )
+        #Generar ciclo de compras
+        confirmar: bool = True
+        while confirmar:
+            producto = int(
+                input(
+                    f"{bcolors.HEADER}{bcolors.UNDERLINE}Ingrese el número del producto que desea comprar:{bcolors.ENDC} "
+                )
+            )
+            cantidad = int(
+                input(
+                    f"{bcolors.HEADER}{bcolors.UNDERLINE}Ingrese la cantidad que desea comprar:{bcolors.ENDC} "
+                )
+            )
+            #Añadir la seleccion del producto al carrito
+            carrito.append([filas[producto - 1][1], filas[producto - 1][3], cantidad])
+            
+            print(f"{bcolors.OKGREEN}Producto agregado al carrito{bcolors.ENDC}")
+            print("¿Desea agregar otro producto?")
+            print(f"{bcolors.OKGREEN}1.{bcolors.ENDC} Si")
+            print(f"{bcolors.OKRED}2.{bcolors.ENDC} No")
+            confirmar = int(input("Ingrese el número de la opción: ")) == 1
+            
+        print(f"{bcolors.OKRED}Carrito de compras:{bcolors.ENDC} ")
+        
+        precio_total = 0
+        for i in carrito:
+            print(
+                f"{bcolors.OKGREEN}Producto:{bcolors.ENDC} {i[0]}, {bcolors.OKGREEN}Precio por unidad:{bcolors.ENDC} {i[1]}, {bcolors.OKGREEN}Cantidad:{bcolors.ENDC} {i[2]}, {bcolors.OKGREEN}Precio total por producto:{bcolors.ENDC} {int(i[2])*int(i[1])}"
+            )
+            precio_total += int(i[2]) * int(i[1])
+        print(f"{bcolors.OKGREEN}Precio total de la compra:{bcolors.ENDC} {precio_total}")
+    print(f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}")
     input("Enter para continuar en el menu: ")
 
 

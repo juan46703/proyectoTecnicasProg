@@ -1,6 +1,10 @@
 import funciones as f
 from funciones import bcolors
 
+""" 
+    post: imprimir en la consola el menu principal    
+"""
+
 
 def mostrar_menu():
     print(
@@ -47,7 +51,7 @@ while continuar:
     elif opcion == "2":
         opcion2()
     elif opcion == "3":
-        opcion3()
+        f.simular_compra()
     elif opcion == "7":
         print("Saliendo del programa...")
         continuar = False
