@@ -6,7 +6,6 @@ import random
     post: imprimir en la consola el resumen inicial     
 """
 
-
 def resumenInicial():
     print(f"{bcolors.HEADER}Resumen inicial {bcolors.ENDC}")
 
@@ -165,7 +164,7 @@ def simular_compra():
             )
             if producto > len(filas):
                 print(f"{bcolors.FAIL}Producto no encontrado{bcolors.ENDC}")
-                continue
+                confirmar = False
             cantidad = int(
                 input(
                     f"{bcolors.HEADER}{bcolors.UNDERLINE}Ingrese la cantidad que desea comprar:{bcolors.ENDC} "
