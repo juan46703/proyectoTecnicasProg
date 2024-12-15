@@ -1,10 +1,9 @@
 import csv
 from utils import bcolors
 
-
-def clientes_productos(
-    listaClientes: list, listaVentasActualizadas: list, listaProductos: list
-):
+""" Pre: listaClientes[][] (Contiene un listado con todos los clientes), listaVentasActualizadas[][] (Contiene una lista con todas las ventas actualizadas), listaProductos[][] (Contiene una lista con todos los productos)
+Post: Muestra el cliente que más compró de una categoría seleccionada por el usuario"""
+def clientes_productos(listaClientes: list, listaVentasActualizadas: list, listaProductos: list):
     categorias = []
     for producto in listaProductos:
         if producto[2] not in categorias:

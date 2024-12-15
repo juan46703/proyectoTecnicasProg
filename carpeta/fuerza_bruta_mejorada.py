@@ -1,42 +1,47 @@
 import csv
 from utils import bcolors
 
-
+""" Pre: listaClientes[][] (Contiene un listado con todos los clientes), listaVentasActualizadas[][] (Contiene una lista con todas las ventas actualizadas), listaProductos[][] (Contiene una lista con todos los productos)"""
 def fuerzaBrutaMejorada(
     listaClientes: list, listaVentasActualizada: list, listaProductos: list
 ):
+    
+    """
+    Post: Carga los datos de las listas y retorna una nueva lista que solo contiene las categorias de los productos
+    """
     def cargar_datos():
         categorias = list({producto[2] for producto in listaProductos})
         return listaClientes, listaVentasActualizada, listaProductos, categorias
-
+    """"
+    Pre: categoria (str), listaProductos [][], listaVentasActualizada [][], listaClientes [][]
+    Pos: clientesDeCategoria [][]  (lista con los clientes que compraron productos de la categoria seleccionada)"""
     def obtener_clientes_por_categoria(
         categoria, listaProductos, listaVentasActualizada, listaClientes
     ):
         clientesDeCategoria = []
 
+        # Crear un diccionario con los productos de la categoría
         productos_categoria = {
             producto[0]: producto[1]
             for producto in listaProductos
             if producto[2] == categoria
         }
 
+        # Iterar sobre las ventas y obtener los clientes que compraron productos de la categoría
         for venta in listaVentasActualizada:
             producto_id = venta[1]
+
             if producto_id in productos_categoria:
                 cliente_id = venta[4]
                 for cliente in listaClientes:
                     if cliente[0] == cliente_id:
                         clientesDeCategoria.append(
-                            [
-                                cliente[1],
-                                cliente[2],
-                                int(venta[2]),
-                                productos_categoria[producto_id],
-                            ]
+                            [cliente[1],cliente[2],int(venta[2]),productos_categoria[producto_id]]
                         )
 
         return clientesDeCategoria
-
+    """ Pre: clientesDeCategoria [][] (lista con los clientes que compraron productos de la categoria seleccionada), inicio (int), fin (int)
+    Pos: cliente[] con la mayor cantidad de unidades compradas"""
     def encontrar_cliente_top_divide_venceras(clientes, inicio, fin):
         # Caso base: si hay un solo cliente
         if inicio == fin:
@@ -45,7 +50,7 @@ def fuerzaBrutaMejorada(
         # Dividir la lista en dos mitades
         mitad = (inicio + fin) // 2
 
-        # Encontrar el cliente que más compró en cada mitad
+        # Encontrar el cliente que más compró en cada mitad, dividir el array en dos subarrays y asi recursivamente
         cliente_izquierda = encontrar_cliente_top_divide_venceras(
             clientes, inicio, mitad
         )
@@ -54,12 +59,11 @@ def fuerzaBrutaMejorada(
         )
 
         # Comparar los resultados y retornar el cliente con mayor cantidad
-        return (
-            cliente_izquierda
-            if cliente_izquierda[2] >= cliente_derecha[2]
-            else cliente_derecha
-        )
+        return (cliente_izquierda if cliente_izquierda[2] >= cliente_derecha[2] else cliente_derecha)
 
+    
+        """ Post: Muestra el cliente que más compró de una categoría seleccionada por el usuario
+        """
     def clientes_productos():
         clientes, ventas, productos, categorias = cargar_datos()
 
@@ -90,13 +94,11 @@ def fuerzaBrutaMejorada(
                 )
 
                 if not clientesDeCategoria:
-                    print(
-                        f"No se encontraron clientes para la categoría '{categoria_seleccionada}'."
-                    )
+                    print(f"No se encontraron clientes para la categoría '{categoria_seleccionada}'.")
                     continue
 
                 print(
-                    f"\n{bcolors.OKBLUE}Clientes que compraron en la categoría '{categoria_seleccionada}':{bcolors.ENDC}"
+                    f"\n{bcolors.OKBLUE}Clientes que compraron en la categoría '{categoria_seleccionada}{bcolors.ENDC}"
                 )
                 for cliente in clientesDeCategoria:
                     print(

@@ -1,3 +1,4 @@
+# Importar los algoritmos de las opciones
 import csv
 from utils import bcolors
 from carpeta import resumen_inicial as ri
@@ -6,7 +7,7 @@ from carpeta import simular_compra as sc
 from carpeta import backtracking as b
 from carpeta import fuerza_bruta as fb
 from carpeta import fuerza_bruta_mejorada as fbm
-from carpeta import informacion_grafica as gr
+from carpeta import informacion_grafica as ig
 
 # Leer los archivos CSV
 with open("productos.csv", "r") as archivo:
@@ -33,7 +34,6 @@ with open("ventas_actualizadas.csv", "r") as archivo:
 """ 
     post: imprimir en la consola el menu principal    
 """
-
 def mostrar_menu():
     print(
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
@@ -60,15 +60,7 @@ def mostrar_menu():
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
     )
 
-productos = [
-    ["laptop", 1200, 3],
-    ["smartphone", 700, 2],
-    ["tablet", 250, 1],
-    ["audifonos", 150, 2],
-    ["cargador", 50, 2],
-    ["chaquetas", 120, 2],
-    ["manzanas", 2, 10],
-]
+# Menu completo
 continuar = True
 while continuar:
     mostrar_menu()
@@ -85,13 +77,13 @@ while continuar:
         sc.simular_compra_funcion(listaProductos)
     elif opcion == "4":
         # revision_productos_presupuesto(productos:list, acumulado:float, carrito:list)
-        b.revision_productos_presupuesto(productos, 0, [])
+        b.revision_productos_presupuesto(listaProductos, 0, [])
     elif opcion == "5":
         fb.clientes_productos(listaClientes, listaVentasActualizadas, listaProductos)
     elif opcion == "6":
         fbm.fuerzaBrutaMejorada(listaClientes, listaVentasActualizadas, listaProductos)
     elif opcion == "7":
-        gr.graficos()
+        ig.graficos(listaClientes, listaVentasActualizadas, listaProductos)
     elif opcion == "8":
         print("Saliendo del programa...")
         continuar = False

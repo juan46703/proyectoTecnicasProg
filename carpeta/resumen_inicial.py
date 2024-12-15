@@ -2,7 +2,9 @@ import csv
 from utils import bcolors
 import random
 
-
+""" pre: listaClientes[][] (lista de clientes), listaProductos[][] (lista de productos), listaVentas[][] (lista de ventas de productos)
+    post: archivo de salida: ventas_actualizadas.csv, imprimir en la consola la relación de ventas y clientes
+"""
 def resumenInicial(listaClientes: list, listaProductos: list, listaVentas: list):
     print(f"{bcolors.HEADER}Resumen inicial {bcolors.ENDC}")
 
@@ -39,10 +41,9 @@ def resumenInicial(listaClientes: list, listaProductos: list, listaVentas: list)
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
     )
 
-    """ pre: archivos de entrada: clientes.csv, productos.csv, ventas.csv
-        post: archivo de salida: ventas_actualizadas.csv, imprimir en la consola la relación de ventas y clientes
+    """pre: listaVentas[][] (lista de ventas de productos) sin la columna del id del cliente
+    post: archivo de salida ventas_actualizadas.csv con la columna del id del cliente asignando un id aleatorio a cada venta, imprimir en la consola la relación de ventas y clientes
     """
-
     def relacion_venta_cliente(listaVentas: list):
         print(f"{bcolors.HEADER}Relación de ventas y clientes {bcolors.ENDC}")
 
