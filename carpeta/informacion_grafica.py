@@ -1,11 +1,42 @@
-import csv
 import matplotlib.pyplot as plt
 from matplotlib import cm
 from utils import bcolors
 from collections import defaultdict
 
-""" Pre: listaProductos[][] (Contiene un listado con todos los productos )
-Post: grafico de barras con las ventas totales por categoria"""
+"""
+Pre: listaClientes[][] (Contiene un listado con todos los clientes), listaVentasActualizadas[][] (Contiene un listado con todas las ventas), listaProductos[][] (Contiene un listado con todos los productos)
+Post: Muestra un menú con las opciones de gráficos y ejecuta la opción seleccionada por el usuario
+"""
+def graficos(listaClientes: list, listaVentasActualizadas: list, listaProductos: list):
+    continuar = True
+    while continuar:
+        menu()
+        opcion = input("Selecciona una opción: ")
+        print(
+            f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
+        )
+
+        if opcion == "1":
+            ventas_totales_categoria(listaProductos, listaVentasActualizadas)
+        elif opcion == "2":
+            productosMasVendidos(listaProductos, listaVentasActualizadas)
+        elif opcion == "3":
+            tendenciasPorFechas(listaVentasActualizadas)
+        elif opcion == "4":
+            comparativoPorCategoria()
+        elif opcion == "5":
+            tendencias()
+        elif opcion == "6":
+            print("Saliendo al menú")
+            continuar = False
+        else:
+            print("Opción no válida, por favor intenta de nuevo.")
+
+
+""" 
+Pre: listaProductos[][] (Contiene un listado con todos los productos )
+Post: grafico de barras con las ventas totales por categoria
+"""
 def ventas_totales_categoria(listaProductos: list, listaVentas: list):
     # Obtener las categorías únicas
     categorias = []
@@ -46,8 +77,10 @@ def ventas_totales_categoria(listaProductos: list, listaVentas: list):
     plt.tight_layout()
     plt.show()
 
-""" Pre: listaProductos[][] (Contiene un listado con todos los productos ), listaVentas[] (Contiene un listado con todas las ventas)
-Post: grafico de barras con los productos mas vendidos"""
+""" 
+Pre: listaProductos[][] (Contiene un listado con todos los productos ), listaVentas[] (Contiene un listado con todas las ventas)
+Post: grafico de barras con los productos mas vendidos
+"""
 def productosMasVendidos(listaProductos: list, listaVentas: list):
 
     # Obtener los productos mas vendidos
@@ -89,8 +122,10 @@ def productosMasVendidos(listaProductos: list, listaVentas: list):
     plt.tight_layout()
     plt.show()
 
-""" Pre:listaVentas[][] (Contiene un listado con todas las ventas)
-Post: grafico de lineas con las tendencias de ventas por fecha"""
+""" 
+Pre:listaVentas[][] (Contiene un listado con todas las ventas)
+Post: grafico de lineas con las tendencias de ventas por fecha
+"""
 def tendenciasPorFechas(listaVentas: list):
     # Crear un diccionario para almacenar las ventas por año y mes
     ventas_por_mes_y_a = defaultdict(int)
@@ -138,33 +173,3 @@ def menu():
     print(
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
     )
-
-
-
-"""Pre: listaClientes[][] (Contiene un listado con todos los clientes), listaVentasActualizadas[][] (Contiene un listado con todas las ventas), listaProductos[][] (Contiene un listado con todos los productos)
-Post: Muestra un menú con las opciones de gráficos y ejecuta la opción seleccionada por el usuario
-    """
-def graficos(listaClientes: list, listaVentasActualizadas: list, listaProductos: list):
-    continuar = True
-    while continuar:
-        menu()
-        opcion = input("Selecciona una opción: ")
-        print(
-            f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
-        )
-
-        if opcion == "1":
-            ventas_totales_categoria(listaProductos, listaVentasActualizadas)
-        elif opcion == "2":
-            productosMasVendidos(listaProductos, listaVentasActualizadas)
-        elif opcion == "3":
-            tendenciasPorFechas(listaVentasActualizadas)
-        elif opcion == "4":
-            comparativoPorCategoria()
-        elif opcion == "5":
-            tendencias()
-        elif opcion == "6":
-            print("Saliendo al menú")
-            continuar = False
-        else:
-            print("Opción no válida, por favor intenta de nuevo.")

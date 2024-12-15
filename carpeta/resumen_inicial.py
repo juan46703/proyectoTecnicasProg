@@ -41,62 +41,65 @@ def resumenInicial(listaClientes: list, listaProductos: list, listaVentas: list)
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
     )
 
-    """pre: listaVentas[][] (lista de ventas de productos) sin la columna del id del cliente
-    post: archivo de salida ventas_actualizadas.csv con la columna del id del cliente asignando un id aleatorio a cada venta, imprimir en la consola la relación de ventas y clientes
-    """
-    def relacion_venta_cliente(listaVentas: list):
-        print(f"{bcolors.HEADER}Relación de ventas y clientes {bcolors.ENDC}")
-
-        # Añadir la nueva columna a cada fila
-        for fila in listaVentas:
-            # Añadir el id del cliente al final de la fila
-            fila.append(random.randint(1, len(listaClientes)))
-
-        # Escribir el archivo CSV actualizado, con la columna que contiene los id de los clientes
-        with open("ventas_actualizadas.csv", "w", newline="") as archivo:
-            escritor_csv = csv.writer(archivo)
-            encabezado = ["id_venta", "id_producto", "cantidad", "fecha", "id_cliente"]
-            escritor_csv.writerow(encabezado)
-            escritor_csv.writerows(listaVentas)
-
-        # Leer el archivo ventas_actualizadas.csv para obtener los id de los productos que cada cliente ha comprado y añadirlo al diccionario
-        with open("ventas_actualizadas.csv", "r") as archivo:
-            lector_csv = csv.reader(archivo)
-            next(lector_csv)
-            relacion = dict()
-
-            # Obtener la informacón de los clientes
-            for line in lector_csv:
-                relacion["Venta " + line[0]] = {
-                    "id_venta": line[0],
-                    "id_producto": line[1],
-                    "cantidad": line[2],
-                    "fecha": line[3],
-                    "id_cliente": line[4],
-                }
-
-        for i, venta in relacion.items():
-            for j in range(len(listaProductos)):
-                if venta["id_producto"] == listaProductos[j][0]:
-                    venta["Producto"] = {
-                        "nombre_producto": listaProductos[j][1],
-                        "categoria_producto": listaProductos[j][2],
-                        "precio_producto": listaProductos[j][3],
-                    }
-            for k in range(len(listaClientes)):
-                if venta["id_cliente"] == listaClientes[k][0]:
-                    venta["Cliente"] = {
-                        "nombre_cliente": listaClientes[k][1],
-                        "apellido_cliente": listaClientes[k][2],
-                        "email_cliente": listaClientes[k][4],
-                    }
-            # Imprimir con buen formato la relación de ventas y clientes
-            print(
-                f"{bcolors.OKGREEN}Id venta:{bcolors.ENDC} {venta['id_venta']}, {bcolors.OKGREEN}Producto:{bcolors.ENDC} {venta['Producto']['nombre_producto']}, {bcolors.OKGREEN}Precio por unidad:{bcolors.ENDC} {venta['Producto']['precio_producto']}, {bcolors.OKGREEN}Cantidad:{bcolors.ENDC} {venta['cantidad']}, {bcolors.OKGREEN}Precio total:{bcolors.ENDC} {int(venta['cantidad'])*int(venta['Producto']['precio_producto'])}, {bcolors.OKGREEN}Cliente:{bcolors.ENDC} {venta['Cliente']['nombre_cliente']} {venta['Cliente']['apellido_cliente']}"
-            )
-
-    relacion_venta_cliente(listaVentas)
+    # Llamado para generar la relacion ventas-clientes en el archivo ventas_actualizadas
+    relacion_venta_cliente(listaVentas, listaClientes, listaProductos)
     print(
         f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
     )
     input("Enter para continuar en el menu: ")
+
+
+"""
+pre: listaVentas[][] (lista de ventas de productos) sin la columna del id del cliente
+post: archivo de salida ventas_actualizadas.csv con la columna del id del cliente asignando un id aleatorio a cada venta, imprimir en la consola la relación de ventas y clientes
+"""
+def relacion_venta_cliente(listaVentas: list, listaClientes: list, listaProductos: list):
+    print(f"{bcolors.HEADER}Relación de ventas y clientes {bcolors.ENDC}")
+
+    # Añadir la nueva columna a cada fila
+    for fila in listaVentas:
+        # Añadir el id del cliente al final de la fila
+        fila.append(random.randint(1, len(listaClientes)))
+
+    # Escribir el archivo CSV actualizado, con la columna que contiene los id de los clientes
+    with open("ventas_actualizadas.csv", "w", newline="") as archivo:
+        escritor_csv = csv.writer(archivo)
+        encabezado = ["id_venta", "id_producto", "cantidad", "fecha", "id_cliente"]
+        escritor_csv.writerow(encabezado)
+        escritor_csv.writerows(listaVentas)
+
+    # Leer el archivo ventas_actualizadas.csv para obtener los id de los productos que cada cliente ha comprado y añadirlo al diccionario
+    with open("ventas_actualizadas.csv", "r") as archivo:
+        lector_csv = csv.reader(archivo)
+        next(lector_csv)
+        relacion = dict()
+
+        # Obtener la informacón de los clientes
+        for line in lector_csv:
+            relacion["Venta " + line[0]] = {
+                "id_venta": line[0],
+                "id_producto": line[1],
+                "cantidad": line[2],
+                "fecha": line[3],
+                "id_cliente": line[4],
+            }
+
+    for i, venta in relacion.items():
+        for j in range(len(listaProductos)):
+            if venta["id_producto"] == listaProductos[j][0]:
+                venta["Producto"] = {
+                    "nombre_producto": listaProductos[j][1],
+                    "categoria_producto": listaProductos[j][2],
+                    "precio_producto": listaProductos[j][3],
+                }
+        for k in range(len(listaClientes)):
+            if venta["id_cliente"] == listaClientes[k][0]:
+                venta["Cliente"] = {
+                    "nombre_cliente": listaClientes[k][1],
+                    "apellido_cliente": listaClientes[k][2],
+                    "email_cliente": listaClientes[k][4],
+                }
+        # Imprimir con buen formato la relación de ventas y clientes
+        print(
+            f"{bcolors.OKGREEN}Id venta:{bcolors.ENDC} {venta['id_venta']}, {bcolors.OKGREEN}Producto:{bcolors.ENDC} {venta['Producto']['nombre_producto']}, {bcolors.OKGREEN}Precio por unidad:{bcolors.ENDC} {venta['Producto']['precio_producto']}, {bcolors.OKGREEN}Cantidad:{bcolors.ENDC} {venta['cantidad']}, {bcolors.OKGREEN}Precio total:{bcolors.ENDC} {int(venta['cantidad'])*int(venta['Producto']['precio_producto'])}, {bcolors.OKGREEN}Cliente:{bcolors.ENDC} {venta['Cliente']['nombre_cliente']} {venta['Cliente']['apellido_cliente']}"
+        )

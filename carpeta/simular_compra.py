@@ -1,8 +1,10 @@
 from utils import bcolors
 import csv
 
-"""pre: listaProductos[][] (Contiene un listado con todos los productos )
-   post: archivo de salida sumulacion_venta.csv. Simular la compra de productos y mostrar el carrito de compras"""
+"""
+pre: listaProductos[][] (Contiene un listado con todos los productos )
+post: archivo de salida sumulacion_venta.csv. Simular la compra de productos y mostrar el carrito de compras
+"""
 def simular_compra_funcion(listaProductos: list):
     print(f"{bcolors.HEADER}Simular compra {bcolors.ENDC}")
     carrito = []

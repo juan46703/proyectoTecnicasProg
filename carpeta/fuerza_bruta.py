@@ -1,8 +1,9 @@
-import csv
 from utils import bcolors
 
-""" Pre: listaClientes[][] (Contiene un listado con todos los clientes), listaVentasActualizadas[][] (Contiene una lista con todas las ventas actualizadas), listaProductos[][] (Contiene una lista con todos los productos)
-Post: Muestra el cliente que más compró de una categoría seleccionada por el usuario"""
+""" 
+Pre: listaClientes[][] (Contiene un listado con todos los clientes), listaVentasActualizadas[][] (Contiene una lista con todas las ventas actualizadas), listaProductos[][] (Contiene una lista con todos los productos)
+Post: Muestra el cliente que más compró de una categoría seleccionada por el usuario
+"""
 def clientes_productos(listaClientes: list, listaVentasActualizadas: list, listaProductos: list):
     categorias = []
     for producto in listaProductos:
@@ -15,7 +16,7 @@ def clientes_productos(listaClientes: list, listaVentasActualizadas: list, lista
 
     seguir = True
     while seguir:
-        categoria = int(input("Ingrese el número de la categoria (0 para salir): "))
+        categoria = int(input(f"{bcolors.HEADER}{bcolors.UNDERLINE}Ingrese el número de la categoria (0 para salir):{bcolors.ENDC} "))
         print(
             f"{bcolors.OKRED}----------------------------------------------{bcolors.ENDC}"
         )
