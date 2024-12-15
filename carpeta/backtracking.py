@@ -83,7 +83,7 @@ def contar_productos(carrito, acumulado, presupuesto):
 
 
 """
-    Pre: productos[][] (matriz con la informacion de los productos), carrito[] (donde se guardarán los nombres de los productos a añadir), int k (maneja profundidad del árbol, indica desde donde avanzar en el recorrido de los productos), float presupuesto, acumulado
+    Pre: productos[][] (matriz con la informacion de los productos), carrito[] (donde se guardarán los nombres de los productos a añadir), int k (maneja profundidad del árbol, indica desde donde avanzar en el recorrido de los productos), float presupuesto, acumulado, precioMenor (precio del producto que menos cuesta)
     Pos: recorre las posibles combinaciones con cada producto y verifica si es una solucion, una vez la encuentra imprime el carrito y se devuelve en el árbol para hallar más combinaciones
 """
 def combinacionDeProductos(
